@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Admin - Edu Docs Premium</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -47,7 +48,7 @@
             </label>
             <label>Prix FCFA<input type="number" id="docPrice" required></label>
             <label>ID Google Drive<input type="text" id="docDriveId" placeholder="1JUTfSFXs..." required></label>
-            <label>Image URL<input type="url" id="docImage"></label>
+            <label>Image URL<input type="url" id="docImage" placeholder="https://..."></label>
           </div>
           <label>Description<textarea id="docDesc" rows="3"></textarea></label>
           <button class="btn full">🚀 Publier le document</button>
@@ -66,7 +67,6 @@
       </div>
     </div>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>
