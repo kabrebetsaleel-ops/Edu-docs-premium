@@ -3,67 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Admin - Edu Docs</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Admin - Edu Docs Premium</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-  <div id="loginScreen" class="login-screen">
-    <div class="login-box">
-      <h1>Edu Docs Admin</h1>
-      <p style="text-align:center;color:var(--muted);margin-bottom:24px;font-size:15px">Espace sécurisé réservé à l’administration</p>
-      <form id="adminLogin">
-        <input id="adminPass" type="password" placeholder="Mot de passe administrateur" required>
-        <button class="btn full">Accéder au tableau de bord</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="adminDashboard" style="display:none">
-    <header>
-      <div class="wrap">
-        <a href="index.html" class="logo">Edu Docs Admin</a>
-        <div style="display:flex;gap:12px">
-          <a href="index.html" class="btn ghost">Voir le site</a>
-          <button id="logoutBtn" class="btn ghost">Déconnexion</button>
-        </div>
+  <div class="admin-container">
+    <div id="loginScreen">
+      <div class="card" style="max-width:400px;margin:80px auto">
+        <h2>Connexion Admin</h2>
+        <form id="adminLogin">
+          <label>Mot de passe<input type="password" id="adminPass" required></label>
+          <button class="btn full" style="margin-top:16px">Se connecter</button>
+        </form>
       </div>
-    </header>
-    <main class="wrap admin-grid">
-      <div class="admin-card">
-        <h2>📄 Ajouter un nouveau document</h2>
-        <form id="docForm" class="admin-form">
-          <input id="docTitle" type="text" placeholder="Titre complet du document" required>
-          <select id="docNiveau" required>
-            <option value="">Choisir le niveau</option>
-            <option>Tle</option><option>1ère</option><option>2nde</option><option>3ème</option><option>4ème</option><option>5ème</option><option>6ème</option>
-          </select>
-          <select id="docMatiere" required>
-            <option value="">Choisir la matière</option>
-            <option>Maths</option><option>PC</option><option>Philo</option><option>Français</option>
-            <option>Anglais</option><option>SVT</option><option>HG</option><option>Allemand</option><option>Espagnol</option>
-          </select>
-          <input id="docPrice" type="number" placeholder="Prix en FCFA" min="500" step="100" required>
-          <input id="docDriveId" type="text" placeholder="ID Google Drive du PDF" required>
-          <textarea id="docDesc" placeholder="Description courte du contenu (2 lignes max)" rows="3"></textarea>
-          <input id="docImage" type="url" placeholder="URL de l’image de couverture (optionnel)">
+    </div>
+
+    <div id="adminDashboard" style="display:none">
+      <div class="admin-header">
+        <h1>Dashboard Edu Docs Premium</h1>
+        <button class="btn danger" id="logoutBtn">Déconnexion</button>
+      </div>
+
+      <div class="card">
+        <h3>Publier un document</h3>
+        <form id="docForm">
+          <div class="grid-2">
+            <label>Titre<input type="text" id="docTitle" required></label>
+            <label>Niveau
+              <select id="docNiveau" required>
+                <option>6ème</option><option>5ème</option><option>4ème</option>
+                <option>3ème</option><option>Seconde</option><option>Première</option><option>Terminale</option>
+              </select>
+            </label>
+            <label>Matière
+              <select id="docMatiere" required>
+                <option>Mathématiques</option><option>Physique</option><option>Chimie</option>
+                <option>Français</option><option>Anglais</option><option>SVT</option>
+                <option>Histoire-Géo</option><option>Philosophie</option>
+              </select>
+            </label>
+            <label>Prix FCFA<input type="number" id="docPrice" required></label>
+            <label>ID Google Drive<input type="text" id="docDriveId" placeholder="1JUTfSFXs..." required></label>
+            <label>Image URL<input type="url" id="docImage"></label>
+          </div>
+          <label>Description<textarea id="docDesc" rows="3"></textarea></label>
           <button class="btn full">🚀 Publier le document</button>
         </form>
       </div>
-      <div>
-        <div class="admin-card">
-          <h2>📚 Documents en ligne (<span id="docsCount">0</span>)</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Documents (<span id="docsCount">0</span>)</h3>
           <div id="docsList"></div>
         </div>
-        <div class="admin-card" style="margin-top:24px">
-          <h2>💰 Commandes récentes</h2>
+        <div class="card">
+          <h3>Commandes à valider</h3>
           <div id="ordersList"></div>
         </div>
       </div>
-    </main>
+    </div>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
