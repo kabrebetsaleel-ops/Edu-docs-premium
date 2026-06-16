@@ -1,4 +1,4 @@
-// 🔥 CONFIG FIREBASE - MÊME PROJET
+// 🔥 CONFIG FIREBASE - PROJET betsaleel-docs
 const firebaseConfig = {
   apiKey: "AIzaSyCuFWrXl7A2PfoXiMSezgmnO-Ia_qR5z9o",
   authDomain: "betsaleel-docs.firebaseapp.com",
@@ -13,10 +13,9 @@ const EMAILJS_PUBLIC_KEY = "AUJu3pIpQ9VoyIKr6";
 const EMAILJS_SERVICE_ID = "service_d72fojp"; 
 const EMAILJS_TEMPLATE_ID = "template_7nnau28";
 const ADMIN_PASS = "Betsaleel2026@";
-const OM_NUMBER = "22606625715"; // Pour WhatsApp
-const ADMIN_WHATSAPP = "22606625715"; // Ton numéro
+const OM_NUMBER = "22606625715";
+const ADMIN_WHATSAPP = "22606625715";
 
-// Init
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -35,13 +34,11 @@ const toast = (msg, type = 'success') => {
   setTimeout(() => t.remove(), 3000);
 };
 
-// Header scroll
 window.addEventListener('scroll', () => {
   const header = $('#header');
   if (header) header.classList.toggle('scrolled', window.scrollY > 20);
 });
 
-// Rendu documents
 async function renderDocs() {
   try {
     const docsRef = await db.collection('documents').orderBy('createdAt', 'desc').get();
@@ -49,8 +46,8 @@ async function renderDocs() {
     displayDocs(allDocs);
     $('#loadingDocs')?.style.setProperty('display', 'none');
   } catch (err) {
-    console.error('Firestore Error:', err);
-    $('#loadingDocs').innerHTML = `<p class="empty">Erreur: ${err.message}<br>Vérifie les règles Firestore.</p>`;
+    console.error(err);
+    $('#loadingDocs').innerHTML = `<p class="empty">Erreur: ${err.message}</p>`;
   }
 }
 
@@ -77,7 +74,6 @@ function displayDocs(docs) {
   `).join('');
 }
 
-// Recherche
 $('#searchInput')?.addEventListener('input', (e) => {
   const q = e.target.value.toLowerCase().trim();
   const filtered = !q ? allDocs : allDocs.filter(d => 
@@ -88,7 +84,6 @@ $('#searchInput')?.addEventListener('input', (e) => {
   displayDocs(filtered);
 });
 
-// Panier
 window.addToCart = async (id) => {
   try {
     const doc = await db.collection('documents').doc(id).get();
@@ -142,7 +137,6 @@ window.removeFromCart = (id) => {
   toast('Retiré du panier');
 };
 
-// Filtres
 $$('.filter-btn').forEach(btn => {
   btn.onclick = () => {
     $$('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -154,7 +148,6 @@ $$('.filter-btn').forEach(btn => {
   };
 });
 
-// Modals
 $('#cartBtn')?.addEventListener('click', () => $('#cartModal').classList.add('show'));
 $('#closeCart')?.addEventListener('click', () => $('#cartModal').classList.remove('show'));
 $('#checkoutBtn')?.addEventListener('click', () => {
@@ -168,7 +161,6 @@ $$('.modal').forEach(m => m.addEventListener('click', e => {
   if (e.target === m) m.classList.remove('show');
 }));
 
-// COMMANDE AVEC VALIDATION ADMIN
 $('#checkoutForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = $('#submitOrder');
@@ -208,7 +200,6 @@ $('#checkoutForm')?.addEventListener('submit', async (e) => {
   }
 });
 
-// ADMIN
 if (window.location.pathname.includes('admin')) {
   $('#adminLogin')?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -324,7 +315,6 @@ async function loadAdminOrders() {
 
 window.validateOrder = async (orderId) => {
   if (!confirm('Paiement Orange Money reçu ? Confirmer ?')) return;
-  
   try {
     const orderDoc = await db.collection('orders').doc(orderId).get();
     const order = orderDoc.data();
@@ -393,7 +383,6 @@ window.deleteDoc = async (id) => {
   }
 };
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
   renderDocs();
   updateCartUI();
