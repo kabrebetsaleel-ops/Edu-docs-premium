@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Edu Docs - Documents scolaires Burkina Faso</title>
+  <meta name="description" content="Documents pédagogiques de qualité pour élèves du primaire au lycée. Fiches, résumés, exercices corrigés. Paiement Orange Money.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+  <header id="header">
+    <div class="wrap">
+      <a href="index.html" class="logo">Edu Docs</a>
+      <button id="cartBtn" class="cart-btn">
+        🛒 Panier <span id="cartCount" class="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>L’excellence scolaire à portée de clic</h1>
+      <p>Chaque élève mérite de réussir. Accède à des documents clairs, structurés et conformes au programme burkinabè. Primaire, collège, lycée : on t’accompagne vers tes objectifs.</p>
+      <div class="cta">
+        <a href="#docs" class="btn">Découvrir les documents</a>
+        <a href="#comment" class="btn ghost">Comment ça marche ?</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap" id="docs">
+    <div class="search">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      <input id="searchInput" type="text" placeholder="Rechercher Maths, Philo, Tle D...">
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Tout voir</button>
+      <button class="filter-btn" data-filter="Tle">Terminale</button>
+      <button class="filter-btn" data-filter="1ère">Première</button>
+      <button class="filter-btn" data-filter="2nde">Seconde</button>
+      <button class="filter-btn" data-filter="Maths">Maths</button>
+      <button class="filter-btn" data-filter="PC">PC</button>
+      <button class="filter-btn" data-filter="Philo">Philo</button>
+      <button class="filter-btn" data-filter="Français">Français</button>
+    </div>
+    <div id="docsGrid" class="grid"></div>
+    <div id="loadingDocs" class="empty">Chargement des documents...</div>
+  </main>
+
+  <section class="wrap" id="comment" style="padding:80px 24px;text-align:center">
+    <h2 style="font-size:36px;margin-bottom:16px;font-weight:800">Comment ça marche ?</h2>
+    <p style="color:var(--muted);font-size:18px;margin-bottom:48px;max-width:600px;margin-left:auto;margin-right:auto">Simple, rapide, sécurisé. En 3 étapes tu as tes documents.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));padding:0">
+      <div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:48px;margin-bottom:16px">1️⃣</div>
+        <h3>Choisis tes documents</h3>
+        <p>Parcours le catalogue et ajoute au panier les fiches dont tu as besoin.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:48px;margin-bottom:16px">2️⃣</div>
+        <h3>Paie via Orange Money</h3>
+        <p>Règle le montant total au +226 06 62 57 15 et garde l’ID de transaction.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:48px;margin-bottom:16px">3️⃣</div>
+        <h3>Reçois par email</h3>
+        <p>Après vérification, tes PDF arrivent automatiquement dans ta boîte mail.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p style="font-size:18px;margin-bottom:8px"><strong>Edu Docs</strong></p>
+      <p>Documents pédagogiques • Ouagadougou, Burkina Faso</p>
+      <p style="margin-top:16px">WhatsApp : +226 06 62 57 15 • Email : betsaleelbusiness@gmail.com</p>
+      <p style="margin-top:24px;font-size:13px">© 2026 Edu Docs • Tous droits réservés • Paiement sécurisé Orange Money</p>
+    </div>
+  </footer>
+
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Ton panier</h2>
+        <button id="closeCart" class="icon-btn">✕</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="modal-footer">
+        <div class="total">Total : <span id="cartTotal">0 FCFA</span></div>
+        <button id="checkoutBtn" class="btn full">Passer la commande</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="checkoutModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Finaliser la commande</h2>
+        <button id="closeCheckout" class="icon-btn">✕</button>
+      </div>
+      <div class="om-instructions">
+        <strong>Étape 1 :</strong> Paie <span id="cartTotal2" style="font-weight:800"></span> via Orange Money au<br>
+        <strong style="font-size:18px;color:var(--brand)">+226 06 62 57 15</strong><br><br>
+        <strong>Étape 2 :</strong> Remplis ce formulaire avec l’ID de transaction reçu par SMS
+      </div>
+      <form id="checkoutForm">
+        <input id="clientName" type="text" placeholder="Nom complet" required>
+        <input id="clientEmail" type="email" placeholder="Email de réception des documents" required>
+        <input id="transactionId" type="text" placeholder="ID transaction Orange Money" required>
+        <input id="clientPhone" type="tel" placeholder="Téléphone WhatsApp" required>
+        <button id="submitOrder" class="btn full">Confirmer et payer</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="successModal" class="modal">
+    <div class="modal-content" style="text-align:center;padding:48px">
+      <div style="font-size:80px;margin-bottom:20px">✅</div>
+      <h2 style="font-size:28px;margin-bottom:16px">Commande enregistrée !</h2>
+      <p style="color:var(--muted);font-size:17px;line-height:1.8">Nous vérifions ton paiement Orange Money.<br>Tu recevras tes documents par email sous 5 minutes.</p>
+      <p style="font-size:14px;margin-top:24px;color:var(--muted)">Un souci ? Écris-nous sur WhatsApp<br><strong style="color:var(--brand)">+226 06 62 57 15</strong></p>
+      <button id="closeSuccess" class="btn" style="margin-top:28px">Parfait, j’ai compris</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
