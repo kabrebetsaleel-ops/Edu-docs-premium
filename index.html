@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Edu Docs Premium</title>
+  <title>Edu Docs Premium - Documents Éducatifs Burkina Faso</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -21,10 +23,10 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Documents Éducatifs Premium</h1>
-      <p>Téléchargement instantané après paiement Orange Money</p>
+      <h1>Documents Éducatifs Premium<br>Pour Réussir au Burkina Faso</h1>
+      <p>Collège, Lycée, Examens nationaux. Téléchargement instantané après validation.</p>
       <div class="search">
-        <input id="searchInput" placeholder="Rechercher...">
+        <input id="searchInput" placeholder="Rechercher : Math, BEPC, Physique...">
       </div>
     </div>
   </section>
@@ -32,40 +34,47 @@
   <section class="filters container">
     <button class="filter-btn active" data-filter="all">Tout</button>
     <button class="filter-btn" data-filter="6ème">6ème</button>
-    <button class="filter-btn" data-filter="3ème">3ème</button>
-    <button class="filter-btn" data-filter="Terminale">Terminale</button>
+    <button class="filter-btn" data-filter="3ème">3ème - BEPC</button>
+    <button class="filter-btn" data-filter="Terminale">Terminale - BAC</button>
+    <button class="filter-btn" data-filter="Mathématiques">Maths</button>
+    <button class="filter-btn" data-filter="Physique">Physique</button>
   </section>
 
   <main class="container" id="docs">
-    <div id="loadingDocs" class="loading"><div class="spinner"></div>Chargement...</div>
+    <div id="loadingDocs" class="loading"><div class="spinner"></div>Chargement des documents...</div>
     <div class="grid" id="docsGrid"></div>
   </main>
 
   <footer>
     <div class="container">
-      <p>© 2026 Edu Docs Premium | <a href="admin.html">Admin</a></p>
+      <p>© 2026 Edu Docs Premium. Paiement sécurisé Orange Money.</p>
+      <p style="margin-top:8px"><a href="admin.html">Espace Admin</a></p>
     </div>
   </footer>
 
   <div class="modal" id="cartModal">
     <div class="modal-content">
-      <div class="modal-head"><h2>Panier</h2><button class="icon-btn" id="closeCart">✕</button></div>
+      <div class="modal-head"><h2>Ton panier</h2><button class="icon-btn" id="closeCart">✕</button></div>
       <div id="cartItems"></div>
       <div class="total"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
-      <button class="btn full" id="checkoutBtn">Commander</button>
+      <button class="btn full" id="checkoutBtn">Passer la commande</button>
     </div>
   </div>
 
   <div class="modal" id="checkoutModal">
     <div class="modal-content">
-      <div class="modal-head"><h2>Commande</h2><button class="icon-btn" id="closeCheckout">✕</button></div>
+      <div class="modal-head"><h2>Finaliser</h2><button class="icon-btn" id="closeCheckout">✕</button></div>
       <form id="checkoutForm">
-        <label>Nom<input type="text" id="clientName" required></label>
+        <label>Nom complet<input type="text" id="clientName" required></label>
         <label>Email<input type="email" id="clientEmail" required></label>
-        <label>WhatsApp<input type="tel" id="clientPhone" required></label>
-        <label>ID Transaction OM<input type="text" id="transactionId" required></label>
-        <div class="pay-info">Total: <span id="cartTotal2">0 FCFA</span> | OM: 66 02 57 15</div>
-        <button class="btn full" id="submitOrder">Confirmer</button>
+        <label>Numéro WhatsApp<input type="tel" id="clientPhone" placeholder="70 00 00 00" required></label>
+        <label>ID Transaction Orange Money<input type="text" id="transactionId" placeholder="MP240616.XXXX" required></label>
+        <div class="pay-info">
+          <strong>Total : <span id="cartTotal2">0 FCFA</span></strong>
+          <p>Orange Money : <strong>66 02 57 15</strong></p>
+          <p style="font-size:13px;color:var(--muted)">Le document sera envoyé après vérification du paiement.</p>
+        </div>
+        <button class="btn full" id="submitOrder">Confirmer et payer</button>
       </form>
     </div>
   </div>
@@ -74,7 +83,7 @@
     <div class="modal-content" style="text-align:center">
       <div style="font-size:64px">🎉</div>
       <h2>Commande enregistrée !</h2>
-      <p>Validation en cours. Tu recevras les docs par email + WhatsApp.</p>
+      <p>Nous vérifions ton paiement. Tu recevras tes documents par email + WhatsApp après validation.</p>
       <button class="btn full" id="closeSuccess">Fermer</button>
     </div>
   </div>
