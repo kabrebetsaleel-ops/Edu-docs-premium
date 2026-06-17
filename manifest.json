@@ -2,7 +2,8 @@
   "name": "Edu Docs Premium",
   "short_name": "Edu Docs",
   "description": "Documents éducatifs premium pour réussir au Burkina Faso",
-  "start_url": "/index.html",
+  "start_url": "/Edu-docs-premium/index.html",
+  "scope": "/Edu-docs-premium/",
   "display": "standalone",
   "background_color": "#0A0A1A",
   "theme_color": "#6C3CE1",
@@ -21,7 +22,6 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
   "categories": ["education"],
   "lang": "fr"
 }
